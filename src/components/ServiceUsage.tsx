@@ -450,21 +450,21 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
       {/* Expanded Chart Modal */}
       {expandedChart && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-2 sm:p-4"
           onClick={() => setExpandedChart(null)}
         >
           <div 
-            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-8 ${
+            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-4 sm:p-6 md:p-8 overflow-auto max-h-[95vh] ${
               theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-200'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-xl font-bold mb-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold mb-1">
                   {expandedChart === 'requests' ? 'Requests Over Time' : expandedChart === 'apiUsage' ? 'API Usage Trend' : 'Service Type Usage Trend'}
                 </h3>
-                <p className={`text-sm mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+                <p className={`text-xs sm:text-sm mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
                   {expandedChart === 'requests' 
                     ? `API request volume trends (${appliedDateRange})` 
                     : expandedChart === 'apiUsage'
@@ -474,14 +474,14 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
               </div>
               <button
                 onClick={() => setExpandedChart(null)}
-                className={`px-4 py-2 rounded-lg border transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-4 py-2 rounded-lg border transition-all flex items-center gap-2 whitespace-nowrap self-start sm:self-center ${
                   theme === 'dark'
                     ? 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
                     : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 <X className="w-4 h-4" />
-                Close
+                <span className="hidden sm:inline">Close</span>
               </button>
             </div>
 
@@ -609,6 +609,17 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
         <div className="flex flex-wrap items-center gap-3">
           {/* Filter Button */}
         
+          {/* Last Updated Display */}
+          <div className={`flex flex-col gap-1 text-xs sm:text-sm ${
+            theme === 'dark'
+              ? 'text-slate-400'
+              : 'text-gray-600'
+          }`}>
+            <span className="whitespace-nowrap font-bold">Last Updated</span>
+            <span className="whitespace-nowrap">
+              {lastUpdated.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {formatTimestamp(lastUpdated)}
+            </span>
+          </div>
 
           {/* Export Button */}
           <ExportDropdown theme={theme} />
@@ -980,18 +991,18 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
       {/* Top Services Usage Table */}
       <div
         style={getPremiumCardStyle(theme)}
-        className={`p-6 ${theme === 'dark' ? 'rounded-xl' : ''}`}
+        className={`p-4 sm:p-6 overflow-hidden ${theme === 'dark' ? 'rounded-xl' : ''}`}
       >
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold mb-1">Top services usage</h3>
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3">
+          <h3 className="text-lg sm:text-xl font-bold">Top services usage</h3>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <ExportDropdown theme={theme} />
             <button 
               onClick={onViewAllServices}
-              className={`text-sm px-4 py-2 rounded-lg border transition-colors ${
+              className={`text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border transition-all whitespace-nowrap ${
                 theme === 'dark'
-                  ? 'border-[#063360] text-[#063360] hover:bg-[#063360] hover:text-white'
-                  : 'border-[#063360] text-[#063360] hover:bg-[#063360] hover:text-white'
+                  ? 'bg-slate-900/80 border-slate-700/50 text-slate-300 hover:bg-slate-800/50 hover:text-slate-100'
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
               }`}
             >
               View all services
@@ -999,8 +1010,8 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        <div className="overflow-x-auto -mx-2 sm:mx-0">
+          <table className="w-full min-w-[640px]">
             <thead>
               <tr className={`border-b ${theme === 'dark' ? 'border-slate-800' : 'border-gray-200'}`}>
                 <th className={`text-left py-3 px-4 text-xs uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>Service Name</th>
@@ -1046,13 +1057,13 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
         {/* Service Request & Analysis Chart */}
         <div
           style={getPremiumCardStyle(theme)}
-          className={`p-6 ${theme === 'dark' ? 'rounded-xl' : ''}`}
+          className={`p-4 sm:p-6 overflow-hidden ${theme === 'dark' ? 'rounded-xl' : ''}`}
         >
           <div className="mb-4">
-            <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
+            <h3 className={`text-lg sm:text-xl font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
               Service Request & Analysis
             </h3>
-            <p className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-[#4a5565]'}`}>
+            <p className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-[#4a5565]'}`}>
               Top services by request volume and performance
             </p>
           </div>
@@ -1071,12 +1082,12 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
                     : 'bg-white border-gray-200 hover:bg-gray-50'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className={`font-medium text-sm ${theme === 'dark' ? 'text-slate-200' : 'text-gray-900'}`}>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                  <span className={`font-medium text-xs sm:text-sm ${theme === 'dark' ? 'text-slate-200' : 'text-gray-900'} break-words`}>
                     {item.service}
                   </span>
                   <span 
-                    className="px-2 py-0.5 rounded-full text-xs font-medium"
+                    className="px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap self-start"
                     style={{
                       backgroundColor: 
                         item.type === 'MapServer' ? 'rgba(14, 165, 233, 0.15)' :
@@ -1109,8 +1120,8 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
                     {item.type}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center justify-between text-xs gap-2">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                     <div>
                       <span className={theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}>Requests: </span>
                       <span className={`font-medium ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
@@ -1131,16 +1142,16 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
         </div>
 
         {/* Service Type Usage Trend */}
-        <div className={`relative rounded-[14px] overflow-visible`}
+        <div className={`relative rounded-[14px]`}
           style={getPremiumCardStyle(theme)}
         >
-          <div className="p-6 pb-8">
-            <div className="flex items-start justify-between mb-6 gap-4">
-              <div className="flex-1">
-                <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
+          <div className="p-4 sm:p-6 pb-6 sm:pb-8">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className={`text-lg sm:text-xl font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
                   Service Type Usage Trend
                 </h3>
-                <p className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-[#4a5565]'}`}>
+                <p className={`text-xs sm:text-sm mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-[#4a5565]'}`}>
                   Usage trends by service type (in thousands)
                 </p>
               </div>
@@ -1163,34 +1174,45 @@ export function ServiceUsage({ theme = 'dark', onViewAllServices }: ServiceUsage
                 </button>
               </div>
             </div>
-            <div className="relative z-0">
-              <ResponsiveContainer width="100%" height={420}>
-              <LineChart data={serviceTypeUsageTrendData}>
+            <ResponsiveContainer width="100%" height={420}>
+              <LineChart data={serviceTypeUsageTrendData} margin={{ top: 10, right: 10, left: -15, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#334155' : '#E5E7EB'} />
-                <XAxis dataKey="month" stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} style={{ fontSize: '11px' }} />
-                <YAxis stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} style={{ fontSize: '11px' }} />
+                <XAxis 
+                  dataKey="month" 
+                  stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} 
+                  style={{ fontSize: '12px' }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={70}
+                  interval="preserveStartEnd"
+                />
+                <YAxis 
+                  stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} 
+                  style={{ fontSize: '12px' }}
+                  width={45}
+                />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: theme === 'dark' ? '#1e293b' : '#ffffff',
                     borderColor: theme === 'dark' ? '#334155' : '#e5e7eb',
-                    color: theme === 'dark' ? '#f1f5f9' : '#1f2937'
+                    color: theme === 'dark' ? '#f1f5f9' : '#1f2937',
+                    fontSize: '14px'
                   }}
                 />
-                <Line type="monotone" dataKey="mapServer" stroke="#3B82F6" strokeWidth={2} dot={{ r: 3 }} name="MapServer" />
-                <Line type="monotone" dataKey="featureServer" stroke="#10B981" strokeWidth={2} dot={{ r: 3 }} name="FeatureServer" />
-                <Line type="monotone" dataKey="geoDataServer" stroke="#F59E0B" strokeWidth={2} dot={{ r: 3 }} name="GeoDataServer" />
-                <Line type="monotone" dataKey="geoCodeServer" stroke="#8B5CF6" strokeWidth={2} dot={{ r: 3 }} name="GeoCodeServer" />
-                <Line type="monotone" dataKey="geoProcessingServer" stroke="#EC4899" strokeWidth={2} dot={{ r: 3 }} name="GeoProcessingServer" />
-                <Line type="monotone" dataKey="networkAnalysisServer" stroke="#14B8A6" strokeWidth={2} dot={{ r: 3 }} name="NetworkAnalysisServer" />
-                <Line type="monotone" dataKey="sceneServer" stroke="#F97316" strokeWidth={2} dot={{ r: 3 }} name="SceneServer" />
-                <Line type="monotone" dataKey="vectorServer" stroke="#6366F1" strokeWidth={2} dot={{ r: 3 }} name="VectorServer" />
-                <Line type="monotone" dataKey="wmsServer" stroke="#EAB308" strokeWidth={2} dot={{ r: 3 }} name="WMSServer" />
-                <Line type="monotone" dataKey="versionManagementServer" stroke="#06B6D4" strokeWidth={2} dot={{ r: 3 }} name="VersionManagementServer" />
-                <Line type="monotone" dataKey="imageServer" stroke="#A855F7" strokeWidth={2} dot={{ r: 3 }} name="ImageServer" />
-                <Line type="monotone" dataKey="others" stroke="#64748B" strokeWidth={2} dot={{ r: 3 }} name="Others" />
+                <Line type="monotone" dataKey="mapServer" stroke="#3B82F6" strokeWidth={1.5} dot={false} name="MapServer" />
+                <Line type="monotone" dataKey="featureServer" stroke="#10B981" strokeWidth={1.5} dot={false} name="FeatureServer" />
+                <Line type="monotone" dataKey="geoDataServer" stroke="#F59E0B" strokeWidth={1.5} dot={false} name="GeoDataServer" />
+                <Line type="monotone" dataKey="geoCodeServer" stroke="#8B5CF6" strokeWidth={1.5} dot={false} name="GeoCodeServer" />
+                <Line type="monotone" dataKey="geoProcessingServer" stroke="#EC4899" strokeWidth={1.5} dot={false} name="GeoProcessingServer" />
+                <Line type="monotone" dataKey="networkAnalysisServer" stroke="#14B8A6" strokeWidth={1.5} dot={false} name="NetworkAnalysisServer" />
+                <Line type="monotone" dataKey="sceneServer" stroke="#F97316" strokeWidth={1.5} dot={false} name="SceneServer" />
+                <Line type="monotone" dataKey="vectorServer" stroke="#6366F1" strokeWidth={1.5} dot={false} name="VectorServer" />
+                <Line type="monotone" dataKey="wmsServer" stroke="#EAB308" strokeWidth={1.5} dot={false} name="WMSServer" />
+                <Line type="monotone" dataKey="versionManagementServer" stroke="#06B6D4" strokeWidth={1.5} dot={false} name="VersionManagementServer" />
+                <Line type="monotone" dataKey="imageServer" stroke="#A855F7" strokeWidth={1.5} dot={false} name="ImageServer" />
+                <Line type="monotone" dataKey="others" stroke="#64748B" strokeWidth={1.5} dot={false} name="Others" />
               </LineChart>
             </ResponsiveContainer>
-            </div>
           </div>
         </div>
       </div>

@@ -98,8 +98,8 @@ export function AllConsumers({ onBack, theme = 'dark', onConsumerClick }: AllCon
   return (
     <div className="space-y-8">
       {/* Header with Back Button */}
-      <div className="flex items-center justify-between mt-[0px] mr-[0px] mb-[24px] ml-[0px]">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-[0px] mr-[0px] mb-[16px] sm:mb-[24px] ml-[0px] gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={onBack}
             className={`p-2 rounded-lg transition-colors ${
@@ -108,11 +108,11 @@ export function AllConsumers({ onBack, theme = 'dark', onConsumerClick }: AllCon
                 : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
             }`}
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 sm:w-5 h-4 sm:h-5" />
           </button>
           <div>
-            <h1 className="text-3xl tracking-tight mb-2 font-bold">All Consumers</h1>
-            <p className={theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}>
+            <h1 className="text-2xl sm:text-3xl tracking-tight mb-1 sm:mb-2 font-bold">All Consumers</h1>
+            <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
               Complete list of registered consumers and their usage statistics
             </p>
           </div>
@@ -124,14 +124,14 @@ export function AllConsumers({ onBack, theme = 'dark', onConsumerClick }: AllCon
         style={getPremiumCardStyle(theme)}
         className="p-6"
       >
-        <div className="flex items-center justify-between mb-6 gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
           <div>
-            <h3 className="text-lg font-bold">Consumer Registry</h3>
-            <p className={`text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+            <h3 className="text-base sm:text-lg font-bold">Consumer Registry</h3>
+            <p className={`text-xs sm:text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
               {filteredConsumers.length} consumers found
             </p>
           </div>
-          <div className="relative w-80">
+          <div className="relative w-full sm:w-64 md:w-80">
             <Search className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 ${theme === 'dark' ? 'text-slate-500' : 'text-gray-400'}`} />
             <input
               type="text"
@@ -150,20 +150,20 @@ export function AllConsumers({ onBack, theme = 'dark', onConsumerClick }: AllCon
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        <div className="overflow-x-auto -mx-2 sm:mx-0">
+          <table className="w-full min-w-[640px]">
             <thead>
               <tr className={`border-b ${theme === 'dark' ? 'border-slate-800' : 'border-gray-200'}`}>
-                <th className={`text-left py-3 px-6 text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                <th className={`text-left py-2 sm:py-3 px-3 sm:px-6 text-xs sm:text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
                   Consumer Name
                 </th>
-                <th className={`text-left py-3 px-6 text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                <th className={`text-left py-2 sm:py-3 px-3 sm:px-6 text-xs sm:text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
                   Total Requests
                 </th>
-                <th className={`text-left py-3 px-6 text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                <th className={`text-left py-2 sm:py-3 px-3 sm:px-6 text-xs sm:text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
                   Success Rate
                 </th>
-                <th className={`text-left py-3 px-6 text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                <th className={`text-left py-2 sm:py-3 px-3 sm:px-6 text-xs sm:text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
                   Last Access
                 </th>
               </tr>
@@ -178,23 +178,23 @@ export function AllConsumers({ onBack, theme = 'dark', onConsumerClick }: AllCon
                       : 'border-gray-200 hover:bg-gray-50'
                   }`}
                 >
-                  <td className="py-4 px-6">
-                    <span className={theme === 'dark' ? 'text-slate-200' : 'text-gray-700'}>
+                  <td className="py-3 sm:py-4 px-3 sm:px-6">
+                    <span className={`text-sm ${theme === 'dark' ? 'text-slate-200' : 'text-gray-700'}`}>
                       {consumer.name}
                     </span>
                   </td>
-                  <td className={`py-4 px-6 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+                  <td className={`py-3 sm:py-4 px-3 sm:px-6 text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
                     {consumer.requests.toLocaleString()}
                   </td>
-                  <td className="py-4 px-6">
-                    <span className="text-emerald-500 font-medium">
+                  <td className="py-3 sm:py-4 px-3 sm:px-6">
+                    <span className="text-emerald-500 font-medium text-sm">
                       {consumer.successRate}%
                     </span>
                   </td>
-                  <td className="py-4 px-6">
-                    <div className="flex items-center gap-2">
-                      <Calendar className={`w-4 h-4 ${theme === 'dark' ? 'text-slate-500' : 'text-gray-500'}`} />
-                      <span className={theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}>
+                  <td className="py-3 sm:py-4 px-3 sm:px-6">
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <Calendar className={`w-3 sm:w-4 h-3 sm:h-4 ${theme === 'dark' ? 'text-slate-500' : 'text-gray-500'}`} />
+                      <span className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
                         {consumer.lastAccess}
                       </span>
                     </div>

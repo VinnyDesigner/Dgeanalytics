@@ -430,21 +430,21 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
       {/* Expanded Chart Modal */}
       {expandedChart && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-2 sm:p-4"
           onClick={() => setExpandedChart(null)}
         >
           <div 
-            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-8 ${
+            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-4 sm:p-6 md:p-8 overflow-auto max-h-[95vh] ${
               theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-200'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-xl font-bold mb-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold mb-1">
                   {expandedChart === 'dataTransferred' ? 'Data Transferred Trend Analysis' : 'Service Usage Trend Analysis'}
                 </h3>
-                <p className={`text-sm mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+                <p className={`text-xs sm:text-sm mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
                   {expandedChart === 'dataTransferred' 
                     ? 'Upload and download bandwidth usage over time (GB)' 
                     : 'Request trends over the selected period'}
@@ -452,14 +452,14 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
               </div>
               <button
                 onClick={() => setExpandedChart(null)}
-                className={`px-4 py-2 rounded-lg border transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-4 py-2 rounded-lg border transition-all flex items-center gap-2 whitespace-nowrap self-start sm:self-center ${
                   theme === 'dark'
                     ? 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
                     : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 <X className="w-4 h-4" />
-                Close
+                <span className="hidden sm:inline">Close</span>
               </button>
             </div>
 
@@ -751,10 +751,10 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Data Transferred Trend Analysis */}
-        <div style={getPremiumCardStyle(theme)} className="p-5">
-          <div className="flex items-start justify-between mb-4 gap-4">
-            <div className="flex-1">
-              <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
+        <div style={getPremiumCardStyle(theme)} className="p-4 sm:p-5">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <h3 className={`text-base sm:text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
                 Data Transferred Trend Analysis
               </h3>
               <p className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-[#4a5565]'}`}>
@@ -763,7 +763,7 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
             </div>
             
             {/* Service Selector */}
-            <div className="relative flex items-center gap-2" ref={serviceDropdownRef1}>
+            <div className="relative flex flex-nowrap items-center gap-2" ref={serviceDropdownRef1}>
               <button
                 onClick={() => setShowServiceDropdown1(!showServiceDropdown1)}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm transition-all ${
@@ -846,27 +846,40 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
             </div>
           </div>
           <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={currentData.dataTransferred}>
+            <LineChart data={currentData.dataTransferred} margin={{ top: 10, right: 5, left: -20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#334155' : '#E5E7EB'} />
-              <XAxis dataKey="date" stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} style={{ fontSize: '11px' }} />
-              <YAxis stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} style={{ fontSize: '11px' }} />
+              <XAxis 
+                dataKey="date" 
+                stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} 
+                style={{ fontSize: '12px' }}
+                angle={-45}
+                textAnchor="end"
+                height={60}
+                interval="preserveStartEnd"
+              />
+              <YAxis 
+                stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} 
+                style={{ fontSize: '12px' }}
+                width={40}
+              />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: theme === 'dark' ? '#1e293b' : '#ffffff',
                   borderColor: theme === 'dark' ? '#334155' : '#e5e7eb',
-                  color: theme === 'dark' ? '#f1f5f9' : '#1f2937'
+                  color: theme === 'dark' ? '#f1f5f9' : '#1f2937',
+                  fontSize: '14px'
                 }}
               />
-              <Line type="monotone" dataKey="transferred" stroke="#0EA5E9" strokeWidth={2} dot={{ fill: '#0EA5E9', r: 4 }} name="Total Transferred" />
+              <Line type="monotone" dataKey="transferred" stroke="#0EA5E9" strokeWidth={2} dot={{ fill: '#0EA5E9', r: 3 }} name="Total Transferred" />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
         {/* Service Usage Trend Analysis */}
-        <div style={getPremiumCardStyle(theme)} className="p-5 overflow-visible">
-          <div className="flex items-start justify-between mb-4 gap-4">
-            <div className="flex-1">
-              <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
+        <div style={getPremiumCardStyle(theme)} className="p-4 sm:p-5">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <h3 className={`text-base sm:text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
                 Service Usage Trend Analysis
               </h3>
               <p className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-[#4a5565]'}`}>
@@ -957,30 +970,41 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
               )}
             </div>
           </div>
-          <div className="relative z-0">
-            <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={currentData.serviceUsage}>
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={currentData.serviceUsage} margin={{ top: 10, right: 5, left: -20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#334155' : '#E5E7EB'} />
-              <XAxis dataKey="day" stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} style={{ fontSize: '11px' }} />
-              <YAxis stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} style={{ fontSize: '11px' }} />
+              <XAxis 
+                dataKey="day" 
+                stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} 
+                style={{ fontSize: '12px' }}
+                angle={-45}
+                textAnchor="end"
+                height={60}
+                interval="preserveStartEnd"
+              />
+              <YAxis 
+                stroke={theme === 'dark' ? '#94a3b8' : '#6b7280'} 
+                style={{ fontSize: '12px' }}
+                width={40}
+              />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: theme === 'dark' ? '#1e293b' : '#ffffff',
                   borderColor: theme === 'dark' ? '#334155' : '#e5e7eb',
-                  color: theme === 'dark' ? '#f1f5f9' : '#1f2937'
+                  color: theme === 'dark' ? '#f1f5f9' : '#1f2937',
+                  fontSize: '14px'
                 }}
               />
-              <Line type="monotone" dataKey="requests" stroke="#8B5CF6" strokeWidth={2} dot={{ r: 4 }} name="Requests" />
+              <Line type="monotone" dataKey="requests" stroke="#8B5CF6" strokeWidth={2} dot={{ r: 3 }} name="Requests" />
             </LineChart>
           </ResponsiveContainer>
-          </div>
         </div>
 
         {/* Error Type Distribution */}
-        <div style={getPremiumCardStyle(theme)} className="p-6">
-          <div className="flex items-start justify-between mb-4 gap-4">
-            <div className="flex-1">
-              <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
+        <div style={getPremiumCardStyle(theme)} className="p-4 sm:p-6 overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <h3 className={`text-base sm:text-xl font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
                 Error Type Distribution
               </h3>
               <p className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-[#4a5565]'}`}>
@@ -1062,15 +1086,15 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
           </div>
           
           {/* Donut Chart */}
-          <div className="flex items-center justify-center mb-6">
-            <ResponsiveContainer width="100%" height={300}>
+          <div className="flex items-center justify-center mb-6 w-full overflow-hidden">
+            <ResponsiveContainer width="100%" height={300} minWidth={250}>
               <PieChart>
                 <Pie
                   data={errorDistributionData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={80}
-                  outerRadius={120}
+                  innerRadius={60}
+                  outerRadius={100}
                   paddingAngle={2}
                   dataKey="value"
                 >
@@ -1091,18 +1115,18 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
           </div>
 
           {/* Legend */}
-          <div className={`rounded-xl px-10 py-4 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'}`}>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+          <div className={`rounded-xl px-4 sm:px-6 md:px-10 py-3 sm:py-4 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'}`}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-2 sm:gap-y-3">
               {errorDistributionData.map((item, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <div 
                     className="w-3 h-3 rounded-full shrink-0" 
                     style={{ backgroundColor: item.color }}
                   />
-                  <span className={`text-[12px] leading-[16px] ${theme === 'dark' ? 'text-slate-400' : 'text-[#4a5565]'}`}>
+                  <span className={`text-[11px] sm:text-[12px] leading-[14px] sm:leading-[16px] ${theme === 'dark' ? 'text-slate-400' : 'text-[#4a5565]'}`}>
                     {item.name}
                   </span>
-                  <span className={`text-[14px] leading-[20px] ml-auto ${theme === 'dark' ? 'text-slate-200' : 'text-[#364153]'}`} style={{ fontWeight: 700 }}>
+                  <span className={`text-[12px] sm:text-[14px] leading-[18px] sm:leading-[20px] ml-auto ${theme === 'dark' ? 'text-slate-200' : 'text-[#364153]'}`} style={{ fontWeight: 700 }}>
                     {item.value}
                   </span>
                 </div>
@@ -1112,10 +1136,10 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
         </div>
 
         {/* Operation Metrics Analysis - placeholder */}
-        <div style={getPremiumCardStyle(theme)} className="p-5 overflow-visible">
-          <div className="flex items-start justify-between mb-4 gap-4">
+        <div style={getPremiumCardStyle(theme)} className="p-4 sm:p-5 overflow-visible">
+          <div className="flex flex-col sm:flex-row items-start justify-between mb-4 gap-3 sm:gap-4">
             <div className="flex-1">
-              <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
+              <h3 className={`text-base sm:text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-[#101828]'}`}>
                 Operation Metrics Analysis
               </h3>
               <p className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-[#4a5565]'}`}>
@@ -1196,8 +1220,8 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
             </div>
           </div>
           
-          <div className="flex items-center justify-center mb-4 relative z-0">
-            <ResponsiveContainer width="100%" height={264}>
+          <div className="flex items-center justify-center mb-4 relative z-0 w-full overflow-hidden">
+            <ResponsiveContainer width="100%" height={264} minWidth={250}>
               <PieChart>
                 <Pie
                   data={[
@@ -1245,8 +1269,8 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
           </div>
 
           {/* Legend */}
-          <div className={`rounded-xl px-10 py-4 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'}`}>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+          <div className={`rounded-xl px-4 sm:px-10 py-3 sm:py-4 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'}`}>
+            <div className="grid grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-2 sm:gap-y-3">
               {[
                 { name: 'Query', value: 30, color: '#10b981' },
                 { name: 'Export', value: 25, color: '#8b5cf6' },
@@ -1258,15 +1282,15 @@ export function TrendAnalyticsContainer({ theme }: TrendAnalyticsContainerProps)
                 { name: 'Edits', value: 2, color: '#ef4444' },
                 { name: 'Others', value: 1, color: '#6366f1' },
               ].map((item, index) => (
-                <div key={index} className="flex items-center gap-1.5">
+                <div key={index} className="flex items-center gap-1.5 sm:gap-2">
                   <div 
-                    className="w-2.5 h-2.5 rounded-full shrink-0" 
+                    className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0" 
                     style={{ backgroundColor: item.color }}
                   />
-                  <span className={`text-[10px] ${theme === 'dark' ? 'text-slate-400' : 'text-[#4a5565]'}`}>
+                  <span className={`text-[10px] sm:text-[12px] leading-[14px] sm:leading-[16px] ${theme === 'dark' ? 'text-slate-400' : 'text-[#4a5565]'}`}>
                     {item.name}
                   </span>
-                  <span className={`text-xs ml-auto ${theme === 'dark' ? 'text-slate-200' : 'text-[#364153]'}`} style={{ fontWeight: 700 }}>
+                  <span className={`text-xs sm:text-[14px] leading-[16px] sm:leading-[20px] ml-auto ${theme === 'dark' ? 'text-slate-200' : 'text-[#364153]'}`} style={{ fontWeight: 700 }}>
                     {item.value}%
                   </span>
                 </div>

@@ -38,7 +38,7 @@ export default function App() {
         onLogout={() => {/* Handle logout */}}
       />
       <main className="flex-1 overflow-auto">
-        <div className={activeView === 'aboutUs' || activeView === 'home' ? '' : 'p-3 sm:p-6 md:p-8 px-3 sm:px-6 md:px-[32px] py-0'}>
+        <div className={activeView === 'aboutUs' || activeView === 'home' ? '' : 'p-2 sm:p-4 md:p-6 lg:p-8 px-2 sm:px-4 md:px-6 lg:px-[32px] py-0'}>
           {activeView === 'home' && <Home theme={theme} onNavigate={setActiveView} />}
           {activeView === 'aboutUs' && <AboutUs theme={theme} onNavigate={setActiveView} />}
           {activeView === 'overview' && <Overview onNavigate={setActiveView} theme={theme} />}

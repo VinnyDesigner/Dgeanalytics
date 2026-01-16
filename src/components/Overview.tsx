@@ -918,31 +918,32 @@ export function Overview({ onNavigate, theme = 'dark' }: OverviewProps) {
       {/* Expanded Chart Modal */}
       {expandedChart === 'serviceTrends' && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-2 sm:p-4"
           onClick={() => setExpandedChart(null)}
         >
           <div 
-            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-8 ${
+            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-4 sm:p-6 md:p-8 overflow-auto max-h-[95vh] ${
               theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-200'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-xl font-bold mb-1">Service Usage Trends</h3>
-                <p className={`text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold mb-1">Service Usage Trends</h3>
+                <p className={`text-xs sm:text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
                   API request trends - {dateRange}
                 </p>
               </div>
               <button
                 onClick={() => setExpandedChart(null)}
-                className={`px-4 py-2 rounded-lg border transition-all ${
+                className={`px-3 sm:px-4 py-2 rounded-lg border transition-all whitespace-nowrap self-start sm:self-center ${
                   theme === 'dark'
                     ? 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
                     : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                Close
+                <span className="hidden sm:inline">Close</span>
+                <X className="w-4 h-4 sm:hidden" />
               </button>
             </div>
 
@@ -1043,31 +1044,32 @@ export function Overview({ onNavigate, theme = 'dark' }: OverviewProps) {
       {/* Expanded Consumption Chart Modal */}
       {expandedChart === 'consumption' && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-2 sm:p-4"
           onClick={() => setExpandedChart(null)}
         >
           <div 
-            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-8 ${
+            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-4 sm:p-6 md:p-8 overflow-auto max-h-[95vh] ${
               theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-200'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-xl font-bold mb-1">Service Consumption Over Time</h3>
-                <p className={`text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold mb-1">Service Consumption Over Time</h3>
+                <p className={`text-xs sm:text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
                   API request trends - {dateRange}
                 </p>
               </div>
               <button
                 onClick={() => setExpandedChart(null)}
-                className={`px-4 py-2 rounded-lg border transition-all ${
+                className={`px-3 sm:px-4 py-2 rounded-lg border transition-all whitespace-nowrap self-start sm:self-center ${
                   theme === 'dark'
                     ? 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
                     : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                Close
+                <span className="hidden sm:inline">Close</span>
+                <X className="w-4 h-4 sm:hidden" />
               </button>
             </div>
 

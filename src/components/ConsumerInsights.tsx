@@ -277,34 +277,34 @@ export function ConsumerInsights({ theme = 'dark', onConsumerClick, onViewAllCon
       {/* Expanded Chart Modal */}
       {expandedChart && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-2 sm:p-4"
           onClick={() => setExpandedChart(null)}
         >
           <div 
-            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-8 ${
+            className={`w-full max-w-6xl rounded-2xl border shadow-2xl p-4 sm:p-6 md:p-8 overflow-auto max-h-[95vh] ${
               theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-200'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-xl font-bold mb-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold mb-1">
                   Consumer Usage Trend Analysis
                 </h3>
-                <p className={`text-sm mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
+                <p className={`text-xs sm:text-sm mt-1 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}`}>
                   Overall consumer usage patterns over time
                 </p>
               </div>
               <button
                 onClick={() => setExpandedChart(null)}
-                className={`px-4 py-2 rounded-lg border transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-4 py-2 rounded-lg border transition-all flex items-center gap-2 whitespace-nowrap self-start sm:self-center ${
                   theme === 'dark'
                     ? 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
                     : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 <X className="w-4 h-4" />
-                Close
+                <span className="hidden sm:inline">Close</span>
               </button>
             </div>
 
@@ -355,6 +355,18 @@ export function ConsumerInsights({ theme = 'dark', onConsumerClick, onViewAllCon
         </div>
         
         <div className="flex flex-wrap items-center gap-2">
+          {/* Last Updated Display */}
+          <div className={`flex flex-col gap-1 text-xs sm:text-sm ${
+            theme === 'dark'
+              ? 'text-slate-400'
+              : 'text-gray-600'
+          }`}>
+            <span className="whitespace-nowrap font-bold">Last Updated</span>
+            <span className="whitespace-nowrap">
+              {lastUpdated.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} {formatTimestamp(lastUpdated)}
+            </span>
+          </div>
+
           {/* Date Range Selector */}
           <div className="relative" ref={dateDropdownRef}>
             <button
@@ -528,10 +540,10 @@ export function ConsumerInsights({ theme = 'dark', onConsumerClick, onViewAllCon
           </div>
           <button
             onClick={onViewAllConsumers}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 hover:scale-[1.02] ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all ${
               theme === 'dark'
-                ? 'bg-slate-900/80 border-slate-700/50 text-slate-300 hover:bg-[#063360] hover:border-[#063360] hover:text-white hover:shadow-lg hover:shadow-[#063360]/20'
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-[#063360] hover:border-[#063360] hover:text-white hover:shadow-lg'
+                ? 'bg-slate-900/80 border-slate-700/50 text-slate-300 hover:bg-slate-800/50 hover:text-slate-100'
+                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
             }`}
           >
             <span className="text-sm">View All Consumers</span>
@@ -630,17 +642,31 @@ export function ConsumerInsights({ theme = 'dark', onConsumerClick, onViewAllCon
           </div>
 
           <ResponsiveContainer width="100%" height={300} className="sm:hidden">
-            <LineChart data={generateUsageTrendAnalysisData(getDaysFromRange(dateRange))} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <LineChart data={generateUsageTrendAnalysisData(getDaysFromRange(dateRange))} margin={{ top: 10, right: 5, left: -25, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={chartColors.grid} opacity={0.3} />
-              <XAxis dataKey="day" stroke={chartColors.axis} style={{ fontSize: '9px' }} />
-              <YAxis yAxisId="left" stroke={chartColors.axis} style={{ fontSize: '9px' }} tickFormatter={(value) => `${(value / 1000).toFixed(0)}K`} />
+              <XAxis 
+                dataKey="day" 
+                stroke={chartColors.axis} 
+                style={{ fontSize: '12px' }}
+                angle={-45}
+                textAnchor="end"
+                height={60}
+                interval="preserveStartEnd"
+              />
+              <YAxis 
+                yAxisId="left" 
+                stroke={chartColors.axis} 
+                style={{ fontSize: '12px' }} 
+                tickFormatter={(value) => `${(value / 1000).toFixed(0)}K`}
+                width={40}
+              />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: chartColors.tooltipBg, 
                   border: `1px solid ${chartColors.tooltipBorder}`,
                   borderRadius: '8px',
                   color: chartColors.tooltipText,
-                  fontSize: '11px'
+                  fontSize: '14px'
                 }}
               />
               <Line 
@@ -649,8 +675,8 @@ export function ConsumerInsights({ theme = 'dark', onConsumerClick, onViewAllCon
                 dataKey="totalRequests" 
                 stroke="#3b82f6" 
                 strokeWidth={2}
-                dot={{ fill: '#3b82f6', r: 3 }}
-                activeDot={{ r: 5 }}
+                dot={{ fill: '#3b82f6', r: 2 }}
+                activeDot={{ r: 4 }}
                 name="Total Requests"
               />
               <Line 
@@ -659,8 +685,8 @@ export function ConsumerInsights({ theme = 'dark', onConsumerClick, onViewAllCon
                 dataKey="activeConsumers" 
                 stroke="#10b981" 
                 strokeWidth={2}
-                dot={{ fill: '#10b981', r: 3 }}
-                activeDot={{ r: 5 }}
+                dot={{ fill: '#10b981', r: 2 }}
+                activeDot={{ r: 4 }}
                 name="Active Consumers"
               />
             </LineChart>
@@ -732,77 +758,80 @@ export function ConsumerInsights({ theme = 'dark', onConsumerClick, onViewAllCon
             </p>
           </div>
 
-          <div className="flex items-center justify-center mb-4">
-            <ResponsiveContainer width="100%" height={220} className="sm:hidden">
-              <RechartsPie>
-                <Pie
-                  data={platformBreakdownData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={90}
-                  paddingAngle={3}
-                  dataKey="value"
-                >
-                  {platformBreakdownData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: chartColors.tooltipBg, 
-                    border: `1px solid ${chartColors.tooltipBorder}`,
-                    borderRadius: '8px',
-                    color: chartColors.tooltipText,
-                    fontSize: '11px'
-                  }} 
-                />
-              </RechartsPie>
-            </ResponsiveContainer>
-            <ResponsiveContainer width="100%" height={264} className="hidden sm:block">
-              <RechartsPie>
-                <Pie
-                  data={platformBreakdownData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={70}
-                  outerRadius={110}
-                  paddingAngle={3}
-                  dataKey="value"
-                >
-                  {platformBreakdownData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: chartColors.tooltipBg, 
-                    border: `1px solid ${chartColors.tooltipBorder}`,
-                    borderRadius: '8px',
-                    color: chartColors.tooltipText
-                  }} 
-                />
-              </RechartsPie>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Legend Box */}
-          <div className={`rounded-xl px-4 sm:px-10 py-3 sm:py-4 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'}`}>
-            <div className="grid grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-2 sm:gap-y-3">
-              {platformBreakdownData.map((item, index) => (
-                <div key={index} className="flex items-center gap-1.5 sm:gap-2">
-                  <div 
-                    className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0" 
-                    style={{ backgroundColor: item.color }}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+            {/* Pie Chart */}
+            <div className="flex items-center justify-center sm:flex-1">
+              <ResponsiveContainer width="100%" height={220} className="sm:hidden">
+                <RechartsPie>
+                  <Pie
+                    data={platformBreakdownData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={90}
+                    paddingAngle={3}
+                    dataKey="value"
+                  >
+                    {platformBreakdownData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: chartColors.tooltipBg, 
+                      border: `1px solid ${chartColors.tooltipBorder}`,
+                      borderRadius: '8px',
+                      color: chartColors.tooltipText,
+                      fontSize: '11px'
+                    }} 
                   />
-                  <span className={`text-[10px] sm:text-[12px] leading-[14px] sm:leading-[16px] ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                    {item.name}
-                  </span>
-                  <span className={`text-xs sm:text-[14px] leading-[16px] sm:leading-[20px] ml-auto ${theme === 'dark' ? 'text-slate-200' : 'text-gray-900'}`} style={{ fontWeight: 700 }}>
-                    {item.value}%
-                  </span>
-                </div>
-              ))}
+                </RechartsPie>
+              </ResponsiveContainer>
+              <ResponsiveContainer width="100%" height={264} className="hidden sm:block">
+                <RechartsPie>
+                  <Pie
+                    data={platformBreakdownData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={70}
+                    outerRadius={110}
+                    paddingAngle={3}
+                    dataKey="value"
+                  >
+                    {platformBreakdownData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: chartColors.tooltipBg, 
+                      border: `1px solid ${chartColors.tooltipBorder}`,
+                      borderRadius: '8px',
+                      color: chartColors.tooltipText
+                    }} 
+                  />
+                </RechartsPie>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Legend Box */}
+            <div className={`rounded-xl px-4 sm:px-6 py-3 sm:py-4 sm:flex-1 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'}`}>
+              <div className="grid grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-2 sm:gap-y-3">
+                {platformBreakdownData.map((item, index) => (
+                  <div key={index} className="flex items-center gap-1.5 sm:gap-2">
+                    <div 
+                      className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0" 
+                      style={{ backgroundColor: item.color }}
+                    />
+                    <span className={`text-[10px] sm:text-[12px] leading-[14px] sm:leading-[16px] ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                      {item.name}
+                    </span>
+                    <span className={`text-xs sm:text-[14px] leading-[16px] sm:leading-[20px] ml-auto ${theme === 'dark' ? 'text-slate-200' : 'text-gray-900'}`} style={{ fontWeight: 700 }}>
+                      {item.value}%
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -821,77 +850,80 @@ export function ConsumerInsights({ theme = 'dark', onConsumerClick, onViewAllCon
             </p>
           </div>
 
-          <div className="flex items-center justify-center mb-4">
-            <ResponsiveContainer width="100%" height={220} className="sm:hidden">
-              <RechartsPie>
-                <Pie
-                  data={deviceDistributionData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={90}
-                  paddingAngle={3}
-                  dataKey="value"
-                >
-                  {deviceDistributionData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: chartColors.tooltipBg, 
-                    border: `1px solid ${chartColors.tooltipBorder}`,
-                    borderRadius: '8px',
-                    color: chartColors.tooltipText,
-                    fontSize: '11px'
-                  }} 
-                />
-              </RechartsPie>
-            </ResponsiveContainer>
-            <ResponsiveContainer width="100%" height={264} className="hidden sm:block">
-              <RechartsPie>
-                <Pie
-                  data={deviceDistributionData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={70}
-                  outerRadius={110}
-                  paddingAngle={3}
-                  dataKey="value"
-                >
-                  {deviceDistributionData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: chartColors.tooltipBg, 
-                    border: `1px solid ${chartColors.tooltipBorder}`,
-                    borderRadius: '8px',
-                    color: chartColors.tooltipText
-                  }} 
-                />
-              </RechartsPie>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Legend Box */}
-          <div className={`rounded-xl px-4 sm:px-10 py-3 sm:py-4 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'}`}>
-            <div className="grid grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-2 sm:gap-y-3">
-              {deviceDistributionData.map((item, index) => (
-                <div key={index} className="flex items-center gap-1.5 sm:gap-2">
-                  <div 
-                    className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0" 
-                    style={{ backgroundColor: item.color }}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+            {/* Pie Chart */}
+            <div className="flex items-center justify-center sm:flex-1">
+              <ResponsiveContainer width="100%" height={220} className="sm:hidden">
+                <RechartsPie>
+                  <Pie
+                    data={deviceDistributionData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={90}
+                    paddingAngle={3}
+                    dataKey="value"
+                  >
+                    {deviceDistributionData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: chartColors.tooltipBg, 
+                      border: `1px solid ${chartColors.tooltipBorder}`,
+                      borderRadius: '8px',
+                      color: chartColors.tooltipText,
+                      fontSize: '11px'
+                    }} 
                   />
-                  <span className={`text-[10px] sm:text-[12px] leading-[14px] sm:leading-[16px] ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-                    {item.name}
-                  </span>
-                  <span className={`text-xs sm:text-[14px] leading-[16px] sm:leading-[20px] ml-auto ${theme === 'dark' ? 'text-slate-200' : 'text-gray-900'}`} style={{ fontWeight: 700 }}>
-                    {item.value}%
-                  </span>
-                </div>
-              ))}
+                </RechartsPie>
+              </ResponsiveContainer>
+              <ResponsiveContainer width="100%" height={264} className="hidden sm:block">
+                <RechartsPie>
+                  <Pie
+                    data={deviceDistributionData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={70}
+                    outerRadius={110}
+                    paddingAngle={3}
+                    dataKey="value"
+                  >
+                    {deviceDistributionData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: chartColors.tooltipBg, 
+                      border: `1px solid ${chartColors.tooltipBorder}`,
+                      borderRadius: '8px',
+                      color: chartColors.tooltipText
+                    }} 
+                  />
+                </RechartsPie>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Legend Box */}
+            <div className={`rounded-xl px-4 sm:px-6 py-3 sm:py-4 sm:flex-1 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'}`}>
+              <div className="grid grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-2 sm:gap-y-3">
+                {deviceDistributionData.map((item, index) => (
+                  <div key={index} className="flex items-center gap-1.5 sm:gap-2">
+                    <div 
+                      className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0" 
+                      style={{ backgroundColor: item.color }}
+                    />
+                    <span className={`text-[10px] sm:text-[12px] leading-[14px] sm:leading-[16px] ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+                      {item.name}
+                    </span>
+                    <span className={`text-xs sm:text-[14px] leading-[16px] sm:leading-[20px] ml-auto ${theme === 'dark' ? 'text-slate-200' : 'text-gray-900'}`} style={{ fontWeight: 700 }}>
+                      {item.value}%
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

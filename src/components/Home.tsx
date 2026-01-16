@@ -35,7 +35,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
   return (
     <>
       {/* Hero Section - Full Width */}
-      <div className={`w-full min-h-[calc(100vh-80px)] relative overflow-hidden`}>
+      <div className={`w-full min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-72px)] lg:min-h-[calc(100vh-80px)] relative overflow-hidden`}>
         {/* Multi-layered Gradient Background */}
         <div className="absolute inset-0">
           {/* Base Gradient */}
@@ -136,7 +136,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
           {/* Analytical Dashboard Animations */}
           {/* Animated Bar Chart */}
           <motion.div
-            className="absolute right-[12%] top-[20%]"
+            className="absolute right-[12%] top-[20%] hidden lg:block"
             animate={{
               y: [0, -10, 0],
             }}
@@ -146,7 +146,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
               ease: "easeInOut"
             }}
           >
-            <div className={`w-32 h-24 rounded-lg backdrop-blur-md p-3 ${
+            <div className={`w-24 lg:w-32 h-20 lg:h-24 rounded-lg backdrop-blur-md p-2 lg:p-3 ${
               theme === 'dark' ? 'bg-white/5 border border-white/10' : 'bg-white/40 border border-blue-200/50'
             }`}
             style={{
@@ -182,7 +182,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
 
           {/* Animated Pie Chart */}
           <motion.div
-            className="absolute left-[10%] top-[25%]"
+            className="absolute left-[10%] top-[25%] hidden lg:block"
             animate={{
               y: [0, -15, 0],
               rotate: [0, 5, 0]
@@ -193,7 +193,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
               ease: "easeInOut"
             }}
           >
-            <div className={`w-28 h-28 rounded-lg backdrop-blur-md p-3 ${
+            <div className={`w-20 lg:w-28 h-20 lg:h-28 rounded-lg backdrop-blur-md p-2 lg:p-3 ${
               theme === 'dark' ? 'bg-white/5 border border-white/10' : 'bg-white/40 border border-blue-200/50'
             }`}
             style={{
@@ -203,7 +203,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
             }}>
               <div className="w-full h-full flex items-center justify-center">
                 <motion.div
-                  className="w-16 h-16 rounded-full relative"
+                  className="w-12 lg:w-16 h-12 lg:h-16 rounded-full relative"
                   style={{
                     background: `conic-gradient(
                       ${theme === 'dark' ? '#0EA5E9' : '#38BDF8'} 0deg 120deg,
@@ -230,7 +230,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
 
           {/* Animated Line Graph */}
           <motion.div
-            className="absolute right-[8%] bottom-[15%]"
+            className="absolute right-[8%] bottom-[15%] hidden lg:block"
             animate={{
               y: [0, -12, 0],
             }}
@@ -241,7 +241,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
               delay: 0.5
             }}
           >
-            <div className={`w-36 h-20 rounded-lg backdrop-blur-md p-3 ${
+            <div className={`w-28 lg:w-36 h-16 lg:h-20 rounded-lg backdrop-blur-md p-2 lg:p-3 ${
               theme === 'dark' ? 'bg-white/5 border border-white/10' : 'bg-white/40 border border-blue-200/50'
             }`}
             style={{
@@ -283,7 +283,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
 
           {/* Data Points Animation */}
           <motion.div
-            className="absolute left-[15%] bottom-[20%]"
+            className="absolute left-[15%] bottom-[20%] hidden lg:block"
             animate={{
               y: [0, -10, 0],
               scale: [1, 1.05, 1]
@@ -295,7 +295,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
               delay: 1
             }}
           >
-            <div className={`w-24 h-24 rounded-lg backdrop-blur-md p-2 ${
+            <div className={`w-20 lg:w-24 h-20 lg:h-24 rounded-lg backdrop-blur-md p-2 ${
               theme === 'dark' ? 'bg-white/5 border border-white/10' : 'bg-white/40 border border-blue-200/50'
             }`}
             style={{
@@ -335,7 +335,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
           {[...Array(3)].map((_, i) => (
             <motion.div
               key={i}
-              className={`absolute w-96 h-96 rounded-full ${
+              className={`absolute w-64 md:w-96 h-64 md:h-96 rounded-full ${
                 theme === 'dark' 
                   ? 'bg-[#063360]/10' 
                   : 'bg-sky-400/5'
@@ -608,7 +608,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 w-full m-0 p-0 flex items-center justify-center min-h-[calc(100vh-80px)]">
+        <div className="relative z-10 w-full m-0 p-4 md:p-0 flex items-center justify-center min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-72px)] lg:min-h-[calc(100vh-80px)]">
           {/* Main Title & Subtitle */}
           <div className="text-center w-full m-0 p-0">
             <motion.div
@@ -616,7 +616,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className={`text-5xl md:text-7xl font-bold mb-6 ${
+              <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 px-4 ${
                 theme === 'dark' ? 'text-white' : 'text-gray-900'
               }`}>
                 SDI Analytics
@@ -630,7 +630,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className={`text-xl md:text-2xl max-w-3xl mx-auto mb-12 ${
+              className={`text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto mb-8 md:mb-12 px-4 ${
                 theme === 'dark' ? 'text-slate-300' : 'text-gray-600'
               }`}
             >
@@ -642,11 +642,11 @@ export function Home({ theme, onNavigate }: HomeProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4"
             >
               <button
                 onClick={() => onNavigate('service')}
-                className="group relative px-8 py-4 rounded-xl font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:brightness-110"
+                className="group relative w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:brightness-110"
                 style={{
                   background: 'linear-gradient(135deg, #063360 0%, #052954 100%)',
                 }}
@@ -659,10 +659,10 @@ export function Home({ theme, onNavigate }: HomeProps) {
                   e.currentTarget.style.boxShadow = '';
                 }}
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  <Activity className="w-5 h-5" />
-                  Service Usage Dashboard
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Activity className="w-4 md:w-5 h-4 md:h-5" />
+                  <span className="text-sm md:text-base">Service Usage Dashboard</span>
+                  <ArrowRight className="w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <motion.div
                   variants={pulseVariants}
@@ -673,7 +673,7 @@ export function Home({ theme, onNavigate }: HomeProps) {
 
               <button
                 onClick={() => onNavigate('consumer')}
-                className="group relative px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                className="group relative w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 style={{
                   border: '2px solid #063360',
                   color: theme === 'dark' ? '#fff' : '#063360',
@@ -692,10 +692,10 @@ export function Home({ theme, onNavigate }: HomeProps) {
                   e.currentTarget.style.boxShadow = '';
                 }}
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  <Users className="w-5 h-5" />
-                  Consumer Usage Dashboard
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Users className="w-4 md:w-5 h-4 md:h-5" />
+                  <span className="text-sm md:text-base">Consumer Usage Dashboard</span>
+                  <ArrowRight className="w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
             </motion.div>

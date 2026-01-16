@@ -240,8 +240,8 @@ export function AllServices({ theme = 'dark', onBack }: AllServicesProps) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between mt-[0px] mr-[0px] mb-[24px] ml-[0px]">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-[0px] mr-[0px] mb-[16px] sm:mb-[24px] ml-[0px] gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={onBack}
             className={`p-2 rounded-lg transition-colors ${
@@ -250,11 +250,11 @@ export function AllServices({ theme = 'dark', onBack }: AllServicesProps) {
                 : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
             }`}
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 sm:w-5 h-4 sm:h-5" />
           </button>
           <div>
-            <h1 className="text-3xl tracking-tight mb-2 font-bold">All Services</h1>
-            <p className={theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}>
+            <h1 className="text-2xl sm:text-3xl tracking-tight mb-1 sm:mb-2 font-bold">All Services</h1>
+            <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
               Complete registry of all available services
             </p>
           </div>
@@ -273,16 +273,16 @@ export function AllServices({ theme = 'dark', onBack }: AllServicesProps) {
           border: '1px solid rgba(44, 44, 44, 0.59)',
           background: '#19191A'
         }}
-        className="p-6"
+        className="p-4 sm:p-6"
       >
-        <div className="flex items-center justify-between mb-6 gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
           <div>
-            <h3 className="text-lg font-bold">Service Registry</h3>
-            <p className={`text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+            <h3 className="text-base sm:text-lg font-bold">Service Registry</h3>
+            <p className={`text-xs sm:text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
               {filteredServices.length} services found
             </p>
           </div>
-          <div className="relative w-80">
+          <div className="relative w-full sm:w-64 md:w-80">
             <Search className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 ${theme === 'dark' ? 'text-slate-500' : 'text-gray-400'}`} />
             <input
               type="text"
@@ -301,13 +301,13 @@ export function AllServices({ theme = 'dark', onBack }: AllServicesProps) {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        <div className="overflow-x-auto -mx-2 sm:mx-0">
+          <table className="w-full min-w-[640px]">
             <thead>
               <tr className={`border-b ${theme === 'dark' ? 'border-slate-800' : 'border-gray-200'}`}>
-                <th className={`text-left py-3 px-6 text-xs uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>Service Name</th>
-                <th className={`text-left py-3 px-6 text-xs uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>Type</th>
-                <th className={`text-left py-3 px-6 text-xs uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>Last Review</th>
+                <th className={`text-left py-2 sm:py-3 px-3 sm:px-6 text-xs uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>Service Name</th>
+                <th className={`text-left py-2 sm:py-3 px-3 sm:px-6 text-xs uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>Type</th>
+                <th className={`text-left py-2 sm:py-3 px-3 sm:px-6 text-xs uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>Last Review</th>
                 <th className={`text-left py-3 px-6 text-xs uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>Requests</th>
               </tr>
             </thead>
